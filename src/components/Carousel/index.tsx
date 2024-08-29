@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper/modules";
 import "swiper/css";
 import "swiper/swiper-bundle.css";
 import "./custom-carousel.css";
@@ -17,7 +23,13 @@ export default function Carousel({ images, name }: Props) {
     <Swiper
       spaceBetween={10}
       slidesPerView={1.2}
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
+      modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+      zoom={true}
+      autoplay={{
+        delay: 3500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      }}
       navigation
       pagination={{ clickable: true }}
       // scrollbar={{ draggable: true }}
@@ -29,7 +41,7 @@ export default function Carousel({ images, name }: Props) {
               src={image}
               alt={name}
               fill
-              className='object-cover'
+              className='object-cover rounded-lg'
               quality={100}
               priority
             />

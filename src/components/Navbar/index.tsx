@@ -39,7 +39,7 @@ export default function Navbar() {
           </Link>
         </div>
         <div className='flex items-center gap-2'>
-          <label className='swap swap-rotate'>
+          <label className='swap swap-rotate btn btn-ghost btn-circle'>
             {/* this hidden checkbox controls the state */}
             <input
               type='checkbox'
