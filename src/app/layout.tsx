@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "@/app/providers";
+import Navbar from "@/components/Navbar";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -21,7 +22,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={font.className + " min-h-screen"}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          <main className='max-w-7xl mx-auto px-4'>{children}</main>
+        </Providers>
       </body>
     </html>
   );
