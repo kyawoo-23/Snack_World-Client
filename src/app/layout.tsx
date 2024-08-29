@@ -24,7 +24,18 @@ export default function RootLayout({
       <body className={font.className + " min-h-screen"}>
         <Providers>
           <Navbar />
-          <main className='max-w-7xl mx-auto px-4'>{children}</main>
+          <main className='max-w-7xl mx-auto px-4 min-h-screen'>
+            {children}
+          </main>
+          <footer className='footer footer-center bg-base-300 text-base-content p-4'>
+            <aside>
+              <p>
+                Copyright © {new Date().getFullYear()} - All right reserved by
+                Snack World.Ltd
+              </p>
+              <p>Developed by Kyaw Kyaw Oo</p>
+            </aside>
+          </footer>
         </Providers>
       </body>
     </html>
