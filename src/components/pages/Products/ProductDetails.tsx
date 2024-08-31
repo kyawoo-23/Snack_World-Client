@@ -5,6 +5,8 @@ import Carousel from "@/components/Carousel";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { DollarSign, Heart, ShoppingCart, Weight } from "lucide-react";
+import ProductVariantPill from "@/components/Pill/ProductVariantPill";
+import QuantityInput from "@/components/Input/QuantityInput";
 
 export default function ProductDetails({ id }: { id: string }) {
   const { data, isFetching } = useQuery({
@@ -87,32 +89,13 @@ export default function ProductDetails({ id }: { id: string }) {
               </h3>
               <div className='w-full flex items-center gap-3 flex-wrap'>
                 {product.productVariant.map((variant) => (
-                  <div
-                    key={variant.productVariantId}
-                    className={`form-control border-2 border-accent px-3 rounded ${
-                      selectedVariant === variant.productVariantId
-                        ? "bg-accent text-accent-content glass"
-                        : ""
-                    }`}
-                  >
-                    <label className='label cursor-pointer gap-3'>
-                      <div
-                        className='size-4 rounded-full border-base-content border-2'
-                        style={{
-                          backgroundColor: variant.variant.color,
-                        }}
-                      ></div>
-                      <span className='label-text'>{variant.variant.name}</span>
-                      <input
-                        type='radio'
-                        name='flavors'
-                        className={`radio border-2`}
-                        onClick={() =>
-                          setSelectedVariant(variant.productVariantId)
-                        }
-                      />
-                    </label>
-                  </div>
+                  <ProductVariantPill
+                    productId={product.productId}
+                    key={variant.variantId}
+                    variant={variant}
+                    selectedVariant={selectedVariant}
+                    setSelectedVariant={setSelectedVariant}
+                  />
                 ))}
               </div>
             </div>
@@ -121,35 +104,7 @@ export default function ProductDetails({ id }: { id: string }) {
               <h3 className='text-lg font-semibold'>
                 Select quantity <span className='text-red-500'>*</span>
               </h3>
-              <div className='join items-center gap-2 w-fit rounded border-2 border-accent'>
-                <button
-                  className='btn join-item'
-                  disabled={quantity === 1}
-                  onClick={() =>
-                    setQuantity((prev) => {
-                      if (prev === 1) return prev;
-                      return prev - 1;
-                    })
-                  }
-                >
-                  -
-                </button>
-                <span className='join-item min-w-8 text-center'>
-                  {quantity}
-                </span>
-                <button
-                  className='btn join-item'
-                  disabled={quantity === 24}
-                  onClick={() => {
-                    setQuantity((prev) => {
-                      if (prev === 24) return prev;
-                      return prev + 1;
-                    });
-                  }}
-                >
-                  +
-                </button>
-              </div>
+              <QuantityInput quantity={quantity} setQuantity={setQuantity} />
             </div>
 
             <button className='btn btn-wide btn-accent mt-3'>

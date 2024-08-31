@@ -6,8 +6,6 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import React from "react";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export default async function page({ params }: { params: { id: string } }) {
   const queryClient = new QueryClient();

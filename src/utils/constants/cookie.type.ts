@@ -1,3 +1,3 @@
 export enum COOKIE {
-  TOKEN = "TOKEN",
+  TOKEN = "CUSTOMER_TOKEN",
 }
