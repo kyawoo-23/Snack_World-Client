@@ -2,13 +2,14 @@
 
 import { useAuthStore } from "@/store/auth-store";
 import { APP_THEMES } from "@/utils/constants";
+import { COOKIE } from "@/utils/constants/cookie.type";
 import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
 import {
   getLocalStorage,
   removeLocalStorage,
   setLocalStorage,
 } from "@/utils/shared/local-storage";
-import { TLoginResponse } from "@/utils/shema/authSchema";
+import { deleteCookie } from "cookies-next";
 import { Theme } from "daisyui";
 import { Moon, ShoppingCart, Sun } from "lucide-react";
 import Image from "next/image";
@@ -18,6 +19,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Navbar() {
+  const [isClient, setIsClient] = useState(false);
   const { user, removeUser } = useAuthStore();
   const router = useRouter();
 
@@ -35,9 +37,13 @@ export default function Navbar() {
     document.querySelector("html")?.setAttribute("data-theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className='navbar text-accent-content bg-accent sticky top-0 glass z-50 mb-8 shadow-lg'>
-      <div className='max-w-7xl w-full mx-auto flex justify-between'>
+      <div className='max-w-5xl w-full mx-auto flex justify-between'>
         <div className='flex '>
           <Link href={"/"} className='size-14 relative'>
             <Image
@@ -61,7 +67,7 @@ export default function Navbar() {
             <Moon className='swap-on size-6 fill-current' />
           </label>
 
-          {user ? (
+          {isClient && user ? (
             <>
               <div className='dropdown dropdown-end'>
                 <div
@@ -116,6 +122,7 @@ export default function Navbar() {
                   <li>
                     <button
                       onClick={() => {
+                        deleteCookie(COOKIE.TOKEN);
                         removeLocalStorage(LOCAL_STORAGE.USER);
                         removeUser();
                         toast.success("Logout successfully");

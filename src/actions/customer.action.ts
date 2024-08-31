@@ -1,5 +1,5 @@
 "use server";
-import { Customer } from "@/prisma-types";
+
 import { post } from "@/utils/api";
 import {
   TLoginCustomerSchema,

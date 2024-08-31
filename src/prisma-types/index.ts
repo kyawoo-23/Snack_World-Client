@@ -190,10 +190,8 @@ export type CartProduct = {
   cartProductId: string;
   quantity: number;
   productId: string;
-  productVariantId: string;
   customerId: string;
   product: Product;
-  productVariant: ProductVariant;
   customer: Customer;
 };
 
