@@ -22,7 +22,7 @@ export default function ProductList() {
 
       {!isFetching &&
         data?.data.map((product) => (
-          <ProductCard key={product.productId} {...product} />
+          <ProductCard key={product.productId} product={product} />
         ))}
     </div>
   );

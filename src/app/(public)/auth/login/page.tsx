@@ -8,7 +8,7 @@ import { COOKIE } from "@/utils/constants/cookie.type";
 import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
 import { setLocalStorage } from "@/utils/shared/local-storage";
 import { TLoginCustomerSchema } from "@/utils/shema/authSchema";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setCookie } from "cookies-next";
 import { Mail, Lock } from "lucide-react";
 import Link from "next/link";
@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 export default function Login() {
   const { setUser } = useAuthStore();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const methods = useForm<TLoginCustomerSchema>({
     defaultValues: {
       email: "",
@@ -53,6 +54,9 @@ export default function Login() {
         setUser(user);
 
         toast.success(res.message);
+        queryClient.invalidateQueries({
+          queryKey: ["products"],
+        });
         router.push("/");
       } else {
         toast.error(res.message);

@@ -11,7 +11,7 @@ import {
 } from "@/utils/shared/local-storage";
 import { deleteCookie } from "cookies-next";
 import { Theme } from "daisyui";
-import { Moon, ShoppingCart, Sun } from "lucide-react";
+import { Heart, Moon, ShoppingCart, Sun } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -69,6 +69,11 @@ export default function Navbar() {
 
           {isClient && user ? (
             <>
+              <Link href='/wishlist' className='btn btn-ghost btn-circle'>
+                <div className='indicator'>
+                  <Heart />
+                </div>
+              </Link>
               <div className='dropdown dropdown-end'>
                 <div
                   tabIndex={0}

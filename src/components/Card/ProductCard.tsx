@@ -5,12 +5,20 @@ import { DIALOG_TYPES } from "@/utils/constants";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
-export default function ProductCard(product: Product) {
-  const [isWishlisted, setIsWishlisted] = useState(
-    product?.wishListProduct?.length > 0
-  );
+type Props =
+  | {
+      product: Product;
+      fromWishlist: true;
+      wishlistProductId: string;
+    }
+  | {
+      product: Product;
+      fromWishlist?: false;
+    };
+
+export default function ProductCard(props: Props) {
+  const { product } = props;
   const { setProduct } = useBuyNowStore();
 
   const handleBuyNow = () => {
@@ -41,9 +49,15 @@ export default function ProductCard(product: Product) {
           </div>
         </div>
         <WishlistButton
+          id={
+            props.fromWishlist
+              ? props.wishlistProductId
+              : product?.wishListProduct?.[0]?.wishListProductId || ""
+          }
           productId={product.productId}
-          isWishlisted={isWishlisted}
-          setIsWishlisted={setIsWishlisted}
+          isWishlisted={
+            props.fromWishlist ? true : product?.wishListProduct?.length > 0
+          }
         />
       </div>
       <h2 className='card-title capitalize'>{product.name}</h2>
