@@ -1,14 +1,19 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { getProductDetails } from "@/actions/product.action";
 import Carousel from "@/components/Carousel";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DollarSign, Heart, ShoppingCart, Weight } from "lucide-react";
 import ProductVariantPill from "@/components/Pill/ProductVariantPill";
 import QuantityInput from "@/components/Input/QuantityInput";
+import WishlistButton from "@/components/Button/WishlistButton";
+import { useAuthStore } from "@/store/auth-store";
+import { getWishListProduct } from "@/actions/wishlist.action";
 
 export default function ProductDetails({ id }: { id: string }) {
+  const { user } = useAuthStore();
   const { data, isFetching } = useQuery({
     queryKey: ["product", id],
     queryFn: () => getProductDetails(id),
@@ -17,8 +22,27 @@ export default function ProductDetails({ id }: { id: string }) {
   const product = data?.data;
   console.log(product);
 
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  const { data: wishListData } = useQuery({
+    queryKey: ["wishlist", product.productId],
+    queryFn: () => getWishListProduct(product.productId),
+    enabled: !!user,
+  });
+
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
+  const [wishListProductId, setWishListProductId] = useState<string | null>(
+    null
+  );
+
+  useEffect(() => {
+    if (product && user && wishListData?.data?.wishListProductId) {
+      setWishListProductId(wishListData?.data.wishListProductId);
+    }
+  }, [product, user, wishListData?.data?.wishListProductId]);
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
@@ -43,12 +67,14 @@ export default function ProductDetails({ id }: { id: string }) {
           <div className='flex flex-col gap-3'>
             <div className='flex items-center justify-between'>
               <h1 className='font-bold text-4xl'>{product.name}</h1>
-              <button className='btn btn-circle btn-accent'>
-                <Heart
-                // color='red'
-                //  fill='red'
-                />
-              </button>
+              <WishlistButton
+                id={wishListProductId}
+                isWishlisted={
+                  wishListData?.data?.wishListProductId ? true : false
+                }
+                productId={product.productId}
+                setWishListProductId={setWishListProductId}
+              />
             </div>
             <div className='flex items-center gap-2'>
               <div className='badge badge-accent text-accent-content badge-lg'>
