@@ -8,12 +8,18 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 type Props = {
-  id?: string;
+  id?: string | null;
   productId: string;
   isWishlisted: boolean;
+  setWishListProductId: (id: string | null) => void;
 };
 
-export default function WishlistButton({ id, productId, isWishlisted }: Props) {
+export default function WishlistButton({
+  id,
+  productId,
+  isWishlisted,
+  setWishListProductId,
+}: Props) {
   const router = useRouter();
   const { user } = useAuthStore();
   const queryClient = useQueryClient();
@@ -40,11 +46,12 @@ export default function WishlistButton({ id, productId, isWishlisted }: Props) {
       if (res.isSuccess) {
         toast.success("Removed from wishlist");
         queryClient.invalidateQueries({
-          queryKey: ["products"],
-        });
-        queryClient.invalidateQueries({
           queryKey: ["wishlist"],
         });
+        queryClient.invalidateQueries({
+          queryKey: ["wishlist", productId],
+        });
+        setWishListProductId(null);
       } else {
         toast.error(res.message);
       }
@@ -61,11 +68,12 @@ export default function WishlistButton({ id, productId, isWishlisted }: Props) {
       if (res.isSuccess) {
         toast.success("Added to wishlist");
         queryClient.invalidateQueries({
-          queryKey: ["products"],
-        });
-        queryClient.invalidateQueries({
           queryKey: ["wishlist"],
         });
+        queryClient.invalidateQueries({
+          queryKey: ["wishlist", productId],
+        });
+        setWishListProductId(res.data?.wishListProductId);
       } else {
         toast.error(res.message);
       }

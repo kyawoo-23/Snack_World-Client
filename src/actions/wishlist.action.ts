@@ -16,7 +16,12 @@ export async function addWishlist(data: { productId: string }) {
   return res;
 }
 
-export async function removeWishlist(productId: string) {
-  const res = await remove<WishListProduct>(`wishlist-product/${productId}`);
+export async function removeWishlist(id: string) {
+  const res = await remove<WishListProduct>(`wishlist-product/${id}`);
+  return res;
+}
+
+export async function getWishListProduct(productId: string) {
+  const res = await get<WishListProduct>(`wishlist-product/${productId}`);
   return res;
 }

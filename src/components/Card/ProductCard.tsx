@@ -1,24 +1,28 @@
+"use client";
+
+import { getWishListProduct } from "@/actions/wishlist.action";
 import WishlistButton from "@/components/Button/WishlistButton";
 import { Product } from "@/prisma-types";
+import { useAuthStore } from "@/store/auth-store";
 import { useBuyNowStore } from "@/store/buyNow-store";
 import { DIALOG_TYPES } from "@/utils/constants";
+import { useQuery } from "@tanstack/react-query";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-type Props =
-  | {
-      product: Product;
-      fromWishlist: true;
-      wishlistProductId: string;
-    }
-  | {
-      product: Product;
-      fromWishlist?: false;
-    };
+export default function ProductCard({ product }: { product: Product }) {
+  const { user } = useAuthStore();
+  const { data, isFetching } = useQuery({
+    queryKey: ["wishlist", product.productId],
+    queryFn: () => getWishListProduct(product.productId),
+    enabled: !!user,
+  });
 
-export default function ProductCard(props: Props) {
-  const { product } = props;
+  const [wishListProductId, setWishListProductId] = useState<string | null>(
+    null
+  );
   const { setProduct } = useBuyNowStore();
 
   const handleBuyNow = () => {
@@ -36,6 +40,12 @@ export default function ProductCard(props: Props) {
     modal?.showModal();
   };
 
+  useEffect(() => {
+    if (user && data && data.data?.wishListProductId) {
+      setWishListProductId(data.data.wishListProductId);
+    }
+  }, [data, user]);
+
   return (
     <Link
       href={`product/${product.productId}`}
@@ -49,15 +59,10 @@ export default function ProductCard(props: Props) {
           </div>
         </div>
         <WishlistButton
-          id={
-            props.fromWishlist
-              ? props.wishlistProductId
-              : product?.wishListProduct?.[0]?.wishListProductId || ""
-          }
+          id={wishListProductId}
           productId={product.productId}
-          isWishlisted={
-            props.fromWishlist ? true : product?.wishListProduct?.length > 0
-          }
+          isWishlisted={data?.data?.wishListProductId ? true : false}
+          setWishListProductId={setWishListProductId}
         />
       </div>
       <h2 className='card-title capitalize'>{product.name}</h2>

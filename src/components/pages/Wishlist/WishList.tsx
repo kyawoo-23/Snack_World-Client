@@ -29,12 +29,7 @@ export default function WishList() {
 
         {!isFetching &&
           data?.data.map((item) => (
-            <ProductCard
-              key={item.productId}
-              product={item.product}
-              wishlistProductId={item.wishListProductId}
-              fromWishlist
-            />
+            <ProductCard key={item.productId} product={item.product} />
           ))}
       </div>
     </>
