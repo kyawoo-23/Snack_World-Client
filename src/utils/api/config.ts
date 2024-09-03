@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { COOKIE } from "@/utils/constants/cookie.type";
-import { getCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 // Create an instance of Axios with default configuration
 export const axiosAPI = axios.create({
@@ -31,6 +32,8 @@ axiosAPI.interceptors.response.use(
   },
   (error: AxiosError) => {
     if (error.response?.status === 401) {
+      deleteCookie(COOKIE.TOKEN, { cookies });
+      redirect("/login");
       throw new Error("Unauthorized, Please logout and login again.");
     }
 

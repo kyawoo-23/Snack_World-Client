@@ -27,7 +27,7 @@ export default function WishlistButton({
   const handleWishlist = async () => {
     if (!user) {
       toast.error("Please login to add to wishlist");
-      router.push("/auth/login");
+      router.push("/login");
       return;
     }
 

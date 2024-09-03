@@ -131,7 +131,7 @@ export default function Navbar() {
                         removeLocalStorage(LOCAL_STORAGE.USER);
                         removeUser();
                         toast.success("Logout successfully");
-                        router.push("/auth/login");
+                        router.push("/login");
                       }}
                     >
                       Logout
@@ -141,7 +141,7 @@ export default function Navbar() {
               </div>
             </>
           ) : (
-            <Link href='/auth/login' className='btn btn-sm'>
+            <Link href='/login' className='btn btn-sm'>
               Login
             </Link>
           )}

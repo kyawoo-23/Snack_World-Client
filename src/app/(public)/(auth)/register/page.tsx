@@ -118,7 +118,7 @@ export default function Register() {
 
         <p className='text-center text-sm mt-3'>
           Already have an account?{" "}
-          <Link href='/auth/login' className='text-secondary-content ms-2'>
+          <Link href='/login' className='text-secondary-content ms-2'>
             Login
           </Link>
         </p>
