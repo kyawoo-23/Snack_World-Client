@@ -3,7 +3,7 @@
 
 import { getProductDetails } from "@/actions/product.action";
 import Carousel from "@/components/Carousel";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { DollarSign, Heart, ShoppingCart, Weight } from "lucide-react";
 import ProductVariantPill from "@/components/Pill/ProductVariantPill";
@@ -11,8 +11,12 @@ import QuantityInput from "@/components/Input/QuantityInput";
 import WishlistButton from "@/components/Button/WishlistButton";
 import { useAuthStore } from "@/store/auth-store";
 import { getWishListProduct } from "@/actions/wishlist.action";
+import toast from "react-hot-toast";
+import { TCartProductRequest } from "@/models/cart.model";
+import { addProductToCart } from "@/actions/cart.action";
 
 export default function ProductDetails({ id }: { id: string }) {
+  const queryClient = useQueryClient();
   const { user } = useAuthStore();
   const { data, isFetching } = useQuery({
     queryKey: ["product", id],
@@ -43,6 +47,42 @@ export default function ProductDetails({ id }: { id: string }) {
       setWishListProductId(wishListData?.data.wishListProductId);
     }
   }, [product, user, wishListData?.data?.wishListProductId]);
+
+  const handleAddToCart = () => {
+    if (!selectedVariant) {
+      toast.error("Please select a variant");
+      return;
+    }
+
+    if (!user) {
+      toast.error("Please login to add to cart");
+      return;
+    }
+
+    const cartProduct: TCartProductRequest = {
+      productId: product.productId,
+      productVarinatId: selectedVariant,
+      quantity,
+    };
+
+    addToCartMutation.mutate(cartProduct);
+  };
+
+  const addToCartMutation = useMutation({
+    mutationFn: (cartProduct: TCartProductRequest) => {
+      return addProductToCart(cartProduct);
+    },
+    onSuccess: (res) => {
+      if (res.isSuccess) {
+        toast.success("Added to cart");
+        queryClient.invalidateQueries({
+          queryKey: ["cart"],
+        });
+      } else {
+        toast.error(res.message);
+      }
+    },
+  });
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
@@ -133,9 +173,13 @@ export default function ProductDetails({ id }: { id: string }) {
               <QuantityInput quantity={quantity} setQuantity={setQuantity} />
             </div>
 
-            <button className='btn btn-wide btn-accent mt-3'>
+            <button
+              className='btn btn-wide btn-accent mt-3'
+              onClick={handleAddToCart}
+            >
               <ShoppingCart />
-              Add to cart ($
+              {addToCartMutation.isPending ? "Adding..." : "Add to cart"}
+              ($
               {quantity *
                 (product.promotion
                   ? product.promotionPrice ?? product.price

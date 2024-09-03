@@ -193,6 +193,7 @@ export type CartProduct = {
   customerId: string;
   product: Product;
   customer: Customer;
+  productVariant: ProductVariant;
 };
 
 export type CustomerOrder = {

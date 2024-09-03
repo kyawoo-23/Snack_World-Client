@@ -1,5 +1,6 @@
 "use client";
 
+import { getCartCount, getCartList } from "@/actions/cart.action";
 import { useAuthStore } from "@/store/auth-store";
 import { APP_THEMES } from "@/utils/constants";
 import { COOKIE } from "@/utils/constants/cookie.type";
@@ -9,6 +10,7 @@ import {
   removeLocalStorage,
   setLocalStorage,
 } from "@/utils/shared/local-storage";
+import { useQuery } from "@tanstack/react-query";
 import { deleteCookie } from "cookies-next";
 import { Theme } from "daisyui";
 import { Heart, Moon, ShoppingCart, Sun } from "lucide-react";
@@ -22,6 +24,12 @@ export default function Navbar() {
   const [isClient, setIsClient] = useState(false);
   const { user, removeUser } = useAuthStore();
   const router = useRouter();
+
+  const { data: cart, isFetching } = useQuery({
+    queryKey: ["cart"],
+    queryFn: () => getCartList(),
+    enabled: !!user,
+  });
 
   const [theme, setTheme] = useState<Theme>(
     (getLocalStorage(LOCAL_STORAGE.THEME) as Theme) || APP_THEMES[0]
@@ -82,7 +90,11 @@ export default function Navbar() {
                 >
                   <div className='indicator'>
                     <ShoppingCart />
-                    <span className='badge badge-sm indicator-item'>8</span>
+                    {cart && cart.data && cart.data?.length > 0 && (
+                      <span className='badge badge-sm indicator-item'>
+                        {cart?.data.length}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div
@@ -90,12 +102,24 @@ export default function Navbar() {
                   className='card card-compact dropdown-content bg-base-300 z-[1] mt-3 w-52 text-base-content shadow-lg'
                 >
                   <div className='card-body'>
-                    <span className='text-lg font-bold'>8 Items</span>
-                    <span className='text-base'>Subtotal: $999</span>
+                    <span className='text-lg font-bold'>
+                      {(cart && cart.data && cart.data?.length) || 0} Items
+                    </span>
+                    <span className='text-base'>
+                      Subtotal: $
+                      {cart?.data?.reduce(
+                        (acc, item) =>
+                          acc +
+                          (item.product.promotion
+                            ? item.product.promotionPrice || item.product.price
+                            : item.product.price * item.quantity),
+                        0
+                      ) || 0}
+                    </span>
                     <div className='card-actions'>
-                      <button className='btn btn-primary btn-block'>
+                      <Link href='/cart' className='btn btn-primary btn-block'>
                         View cart
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
