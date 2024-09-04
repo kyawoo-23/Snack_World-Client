@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { COOKIE } from "@/utils/constants/cookie.type";
+import { COOKIE } from "@/utils/constants";
 import { deleteCookie, getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

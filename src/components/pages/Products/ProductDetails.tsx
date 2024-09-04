@@ -14,6 +14,7 @@ import { getWishListProduct } from "@/actions/wishlist.action";
 import toast from "react-hot-toast";
 import { TCartProductRequest } from "@/models/cart.model";
 import { addProductToCart } from "@/actions/cart.action";
+import { getProductPrice } from "@/utils/shared";
 
 export default function ProductDetails({ id }: { id: string }) {
   const queryClient = useQueryClient();
@@ -180,11 +181,7 @@ export default function ProductDetails({ id }: { id: string }) {
               <ShoppingCart />
               {addToCartMutation.isPending ? "Adding..." : "Add to cart"}
               ($
-              {quantity *
-                (product.promotion
-                  ? product.promotionPrice ?? product.price
-                  : product.price)}
-              )
+              {getProductPrice(product, quantity)})
             </button>
           </div>
         </>

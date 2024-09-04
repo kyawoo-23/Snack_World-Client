@@ -1,10 +1,11 @@
 "use client";
 
-import { getCartCount, getCartList } from "@/actions/cart.action";
+import { getCartList } from "@/actions/cart.action";
 import { useAuthStore } from "@/store/auth-store";
 import { APP_THEMES } from "@/utils/constants";
-import { COOKIE } from "@/utils/constants/cookie.type";
-import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
+import { COOKIE } from "@/utils/constants";
+import { LOCAL_STORAGE } from "@/utils/constants";
+import { getProductPrice } from "@/utils/shared";
 import {
   getLocalStorage,
   removeLocalStorage,
@@ -109,15 +110,12 @@ export default function Navbar() {
                       Subtotal: $
                       {cart?.data?.reduce(
                         (acc, item) =>
-                          acc +
-                          (item.product.promotion
-                            ? item.product.promotionPrice || item.product.price
-                            : item.product.price * item.quantity),
+                          acc + getProductPrice(item.product, item.quantity),
                         0
                       ) || 0}
                     </span>
                     <div className='card-actions'>
-                      <Link href='/cart' className='btn btn-primary btn-block'>
+                      <Link href='/cart' className='btn btn-accent btn-block'>
                         View cart
                       </Link>
                     </div>

@@ -11,9 +11,9 @@ import { useRouter } from "next/navigation";
 import { TRegisterCustomerSchema } from "@/utils/shema/authSchema";
 import toast from "react-hot-toast";
 import { setCookie } from "cookies-next";
-import { COOKIE } from "@/utils/constants/cookie.type";
+import { COOKIE } from "@/utils/constants";
 import { setLocalStorage } from "@/utils/shared/local-storage";
-import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
+import { LOCAL_STORAGE } from "@/utils/constants";
 import { useAuthStore } from "@/store/auth-store";
 
 export default function Register() {
@@ -83,6 +83,7 @@ export default function Register() {
         </TextInput>
         <TextInput
           name='email'
+          type='email'
           placeholder='email@gmail.com'
           validation={{
             required: "Email address is required",

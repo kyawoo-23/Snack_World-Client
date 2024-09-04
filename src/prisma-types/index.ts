@@ -203,7 +203,8 @@ export type CustomerOrder = {
   totalPrice: number;
   deliveryPrice: number;
   deliveryAddress: string;
-  deliveryMethod: string;
+  deliveryContact: string;
+  isPrepaid: boolean;
   customerId: string;
   createdAt: Date;
   updatedAt: Date;

@@ -4,8 +4,8 @@ import { loginCustomer } from "@/actions/customer.action";
 import TextInput from "@/components/Input/TextInput";
 import { useAuthStore } from "@/store/auth-store";
 import { EMAIL_REGEX } from "@/utils/constants";
-import { COOKIE } from "@/utils/constants/cookie.type";
-import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
+import { COOKIE } from "@/utils/constants";
+import { LOCAL_STORAGE } from "@/utils/constants";
 import { setLocalStorage } from "@/utils/shared/local-storage";
 import { TLoginCustomerSchema } from "@/utils/shema/authSchema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -79,6 +79,7 @@ export default function Login() {
         </h3>
         <TextInput
           name='email'
+          type='email'
           placeholder='email@gmail.com'
           validation={{
             required: "Email address is required",

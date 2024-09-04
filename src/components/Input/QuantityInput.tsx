@@ -1,8 +1,10 @@
 "use client";
 
+import { MouseEvent } from "react";
+
 type Props = {
   quantity: number;
-  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  setQuantity: (e: MouseEvent<HTMLButtonElement>, value: number) => void;
 };
 
 export default function QuantityInput({ quantity, setQuantity }: Props) {
@@ -11,12 +13,7 @@ export default function QuantityInput({ quantity, setQuantity }: Props) {
       <button
         className='btn join-item'
         disabled={quantity === 1}
-        onClick={() =>
-          setQuantity((prev) => {
-            if (prev === 1) return prev;
-            return prev - 1;
-          })
-        }
+        onClick={(e) => setQuantity(e, quantity - 1)}
       >
         -
       </button>
@@ -24,12 +21,7 @@ export default function QuantityInput({ quantity, setQuantity }: Props) {
       <button
         className='btn join-item'
         disabled={quantity === 24}
-        onClick={() => {
-          setQuantity((prev) => {
-            if (prev === 24) return prev;
-            return prev + 1;
-          });
-        }}
+        onClick={(e) => setQuantity(e, quantity + 1)}
       >
         +
       </button>

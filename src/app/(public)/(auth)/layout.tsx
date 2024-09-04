@@ -2,8 +2,8 @@
 
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { useAuthStore } from "@/store/auth-store";
-import { COOKIE } from "@/utils/constants/cookie.type";
-import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
+import { COOKIE } from "@/utils/constants";
+import { LOCAL_STORAGE } from "@/utils/constants";
 import { removeLocalStorage } from "@/utils/shared/local-storage";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";

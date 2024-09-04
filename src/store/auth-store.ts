@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
+import { LOCAL_STORAGE } from "@/utils/constants";
 import { getLocalStorage } from "@/utils/shared/local-storage";
 import { TUser } from "@/utils/shema/authSchema";
 import { create } from "zustand";

@@ -6,7 +6,7 @@ import { useFormContext, RegisterOptions } from "react-hook-form";
 
 type Props = {
   name: string;
-  type?: "text" | "password";
+  type?: "text" | "password" | "email" | "tel";
   placeholder?: string;
   validation?: RegisterOptions;
   children?: React.ReactNode;

@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE } from "@/utils/constants/local-storage.type";
+import { LOCAL_STORAGE } from "@/utils/constants";
 
 export const setLocalStorage = (key: LOCAL_STORAGE, value: string) => {
   localStorage.setItem(key, value);
