@@ -1,8 +1,8 @@
 "use client";
 
 import { getWishList } from "@/actions/wishlist.action";
-import ProductCard from "@/components/Card/ProductCard";
-import ProductCardSkeleton from "@/components/Card/ProductCardSkeleton";
+import ProductCard from "@/components/Card/ProductCard/ProductCard";
+import ProductCardSkeleton from "@/components/Card/ProductCard/ProductCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 
 export default function WishList() {

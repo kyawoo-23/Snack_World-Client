@@ -57,6 +57,9 @@ export default function Login() {
         queryClient.invalidateQueries({
           queryKey: ["products"],
         });
+        queryClient.invalidateQueries({
+          queryKey: ["cart"],
+        });
         router.push("/");
       } else {
         toast.error(res.message);
