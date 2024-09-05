@@ -1,4 +1,5 @@
 import { CustomerOrder, CustomerOrderVendor } from "@/prisma-types";
+import { getLocalizedTime } from "@/utils/shared";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,10 +36,15 @@ export default function OrderDetails({ order }: Props) {
     <div key={order.customerOrderId}>
       <div className='collapse collapse-arrow bg-accent'>
         <input type='checkbox' />
-        <div className='collapse-title text-xl font-medium'>
+        <div className='collapse-title font-medium'>
           <div className='w-full flex justify-between items-center'>
-            <h3>{order.orderCode}</h3>
-            <span className='badge'>{order.orderStatus}</span>
+            <h3 className='text-lg'>{order.orderCode}</h3>
+            <div className='flex items-center gap-2'>
+              <span className='text-sm'>
+                {getLocalizedTime(order.createdAt)}
+              </span>
+              <span className='badge'>{order.orderStatus}</span>
+            </div>
           </div>
         </div>
         <div className='collapse-content flex flex-col gap-2'>
@@ -89,8 +95,11 @@ export default function OrderDetails({ order }: Props) {
             </div>
           ))}
 
-          <div className='mt-2 flex justify-end items-center text-xl font-semibold'>
-            Total: ${order.totalPrice}
+          <div className='mt-2 flex justify-between items-center font-semibold'>
+            <p className='text-sm text-balance'>
+              Address: {order.deliveryAddress}, Phone: {order.deliveryContact}
+            </p>
+            <div className='text-xl'>Total: ${order.totalPrice}</div>
           </div>
         </div>
       </div>

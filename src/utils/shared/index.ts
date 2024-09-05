@@ -40,3 +40,7 @@ export function generateOrderCode() {
 export function getLocalizedDate(date: Date): string {
   return format(date, "PPP");
 }
+
+export function getLocalizedTime(date: Date): string {
+  return format(date, "hh:mm:ss a");
+}

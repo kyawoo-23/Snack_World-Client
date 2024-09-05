@@ -26,13 +26,13 @@ export default function OrderList() {
   return (
     <>
       {isFetching ? (
-        <>
+        <div className='flex flex-col gap-3'>
           {Array(4)
             .fill(null)
             .map((_, index) => (
               <div key={index} className='skeleton h-24'></div>
             ))}
-        </>
+        </div>
       ) : (
         <>
           {groupedOrders &&
