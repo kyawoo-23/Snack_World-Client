@@ -171,7 +171,12 @@ export default function ProductDetails({ id }: { id: string }) {
               <h3 className='text-lg font-semibold'>
                 Select quantity <span className='text-red-500'>*</span>
               </h3>
-              <QuantityInput quantity={quantity} setQuantity={setQuantity} />
+              <QuantityInput
+                quantity={quantity}
+                setQuantity={(_, quantity) => {
+                  setQuantity(quantity);
+                }}
+              />
             </div>
 
             <button
@@ -179,7 +184,7 @@ export default function ProductDetails({ id }: { id: string }) {
               onClick={handleAddToCart}
             >
               <ShoppingCart />
-              {addToCartMutation.isPending ? "Adding..." : "Add to cart"}
+              {addToCartMutation.isPending ? "Adding... " : "Add to cart "}
               ($
               {getProductPrice(product, quantity)})
             </button>

@@ -1,6 +1,7 @@
 "use client";
 
 import { getCartList } from "@/actions/cart.action";
+import { getProfile } from "@/actions/customer.action";
 import { useAuthStore } from "@/store/auth-store";
 import { APP_THEMES } from "@/utils/constants";
 import { COOKIE } from "@/utils/constants";
@@ -11,6 +12,7 @@ import {
   removeLocalStorage,
   setLocalStorage,
 } from "@/utils/shared/local-storage";
+import { TUser } from "@/utils/shema/authSchema";
 import { useQuery } from "@tanstack/react-query";
 import { deleteCookie } from "cookies-next";
 import { Theme } from "daisyui";
@@ -130,10 +132,13 @@ export default function Navbar() {
                 >
                   <div className='avatar'>
                     <div className='mask mask-squircle w-10'>
-                      <img
-                        src={`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.name}`}
-                        className='object-cover'
-                      />
+                      {
+                        // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+                        <img
+                          src={`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.name}`}
+                          className='object-cover'
+                        />
+                      }
                     </div>
                   </div>
                 </div>
@@ -142,12 +147,18 @@ export default function Navbar() {
                   className='menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-52 p-2 shadow-lg text-base-content'
                 >
                   <li>
-                    <Link href='profile' className='justify-between'>
+                    <Link href='profile' className='py-2'>
                       Profile
                     </Link>
                   </li>
                   <li>
+                    <Link href='orders' className='py-2'>
+                      My orders
+                    </Link>
+                  </li>
+                  <li>
                     <button
+                      className='py-2'
                       onClick={() => {
                         deleteCookie(COOKIE.TOKEN);
                         removeLocalStorage(LOCAL_STORAGE.USER);

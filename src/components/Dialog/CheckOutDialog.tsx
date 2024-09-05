@@ -1,27 +1,34 @@
 "use client";
 
 import { checkOut } from "@/actions/checkout.action";
+import { getProfile } from "@/actions/customer.action";
 import TextAreaInput from "@/components/Input/TextAreaInput";
 import TextInput from "@/components/Input/TextInput";
 import { useCheckOutStore } from "@/store/checkout-store";
 import { DIALOG_TYPES } from "@/utils/constants";
+import { generateOrderCode } from "@/utils/shared";
 import {
   TCheckOutRequest,
   TCheckOutSchema,
 } from "@/utils/shema/checkOutSchema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Phone } from "lucide-react";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export default function CheckOutDialog() {
   const { totalPrice, products } = useCheckOutStore();
 
-  const queryClient = useQueryClient();
+  const { data: profile, isSuccess } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(),
+  });
+
   const methods = useForm<TCheckOutSchema>({
     defaultValues: {
-      deliveryAddress: "",
-      deliveryContact: "",
+      deliveryAddress: profile?.data.address || "",
+      deliveryContact: profile?.data.phone || "",
     },
     mode: "onBlur",
   });
@@ -32,10 +39,19 @@ export default function CheckOutDialog() {
     formState: { errors, isSubmitting },
   } = methods;
 
+  useEffect(() => {
+    if (isSuccess && profile?.data) {
+      reset({
+        deliveryAddress: profile.data.address || "",
+        deliveryContact: profile.data.phone || "",
+      });
+    }
+  }, [isSuccess, profile, reset]);
+
   const onSubmit = (schema: TCheckOutSchema) => {
     mutation.mutate({
       ...schema,
-      orderCode: "ORDER-123",
+      orderCode: generateOrderCode(),
       isPrepaid: false,
       totalPrice,
       deliveryPrice: 10,

@@ -1,6 +1,6 @@
 "use client";
 
-import { loginCustomer } from "@/actions/customer.action";
+import { getProfile, loginCustomer } from "@/actions/customer.action";
 import TextInput from "@/components/Input/TextInput";
 import { useAuthStore } from "@/store/auth-store";
 import { EMAIL_REGEX } from "@/utils/constants";
