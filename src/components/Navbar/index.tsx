@@ -147,12 +147,12 @@ export default function Navbar() {
                   className='menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-52 p-2 shadow-lg text-base-content'
                 >
                   <li>
-                    <Link href='profile' className='py-2'>
+                    <Link href='/profile' className='py-2'>
                       Profile
                     </Link>
                   </li>
                   <li>
-                    <Link href='orders' className='py-2'>
+                    <Link href='/orders' className='py-2'>
                       My orders
                     </Link>
                   </li>

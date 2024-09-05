@@ -36,7 +36,7 @@ export default function Carousel({ images, name }: Props) {
     >
       {images.map((image, idx) => (
         <SwiperSlide key={idx}>
-          <div className='relative w-full h-[560px]'>
+          <div className='relative w-full h-[560px] bg-white rounded-lg'>
             <Image
               src={image}
               alt={name}

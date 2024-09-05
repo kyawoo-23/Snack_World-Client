@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { getProductPrice } from "@/utils/shared";
 import Link from "next/link";
 import { MouseEvent } from "react";
+import ProductVariantPillView from "@/components/Pill/ProductVariantPillView";
 
 type Props = {
   product: CartProduct;
@@ -92,17 +93,10 @@ export default function CartCard({ product }: Props) {
           <div className='badge badge-accent badge-sm'>
             {product.product.vendor.name}
           </div>
-          <div className='flex !flex-row products-center justify-between gap-2 p-2 card bg-accent items-center'>
-            <div
-              className='size-4 rounded-full'
-              style={{
-                backgroundColor: product.productVariant.variant.color,
-              }}
-            ></div>
-            <div className='text-md font-medium'>
-              {product.productVariant.variant.name}
-            </div>
-          </div>
+          <ProductVariantPillView
+            color={product.productVariant.variant.color}
+            name={product.productVariant.variant.name}
+          />
         </div>
       </div>
 

@@ -11,3 +11,8 @@ export async function checkOut(request: TCheckOutRequest) {
   );
   return res;
 }
+
+export async function getCustomerOrders() {
+  const res = await get<CustomerOrder[]>("customer-order/user");
+  return res;
+}

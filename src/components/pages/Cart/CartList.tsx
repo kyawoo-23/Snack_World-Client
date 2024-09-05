@@ -1,8 +1,8 @@
 "use client";
 
 import { getCartList } from "@/actions/cart.action";
-import CartCard from "@/components/Card/CartCard/CartCard";
-import CartCardSkeleton from "@/components/Card/CartCard/CartCardSkeleton";
+import CartCard from "@/components/pages/Cart/CartCard";
+import CartCardSkeleton from "@/components/pages/Cart/CartCardSkeleton";
 import { useCheckOutStore } from "@/store/checkout-store";
 import { DIALOG_TYPES } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
