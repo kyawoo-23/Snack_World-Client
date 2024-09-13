@@ -41,6 +41,9 @@ export default function OrderDetails({ order }: Props) {
             <h3 className='text-lg'>{order.orderCode}</h3>
             <div className='flex items-center gap-2'>
               <span className='text-sm'>
+                <span className='text-base-content/60 text-xs'>
+                  Order Placed At:
+                </span>{" "}
                 {getLocalizedTime(order.createdAt)}
               </span>
               <span className='badge'>{order.orderStatus}</span>

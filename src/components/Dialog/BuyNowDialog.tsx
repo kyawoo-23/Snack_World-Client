@@ -39,7 +39,10 @@ export default function BuyNowDialog() {
         </div>
 
         <div className='flex items-center justify-between gap-2 mt-8'>
-          <QuantityInput quantity={quantity} setQuantity={setQuantity} />
+          <QuantityInput
+            quantity={quantity}
+            setQuantity={(_, quantity) => setQuantity(quantity)}
+          />
           <button className='btn btn-wide btn-accent'>
             <ShoppingCart />
             Check out (${quantity * product.price})

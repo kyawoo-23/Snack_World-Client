@@ -4,14 +4,15 @@ import { getCartList } from "@/actions/cart.action";
 import CartCard from "@/components/pages/Cart/CartCard";
 import CartCardSkeleton from "@/components/pages/Cart/CartCardSkeleton";
 import { useCheckOutStore } from "@/store/checkout-store";
-import { DIALOG_TYPES } from "@/utils/constants";
+import { COOKIE, DIALOG_TYPES } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
+import { getCookie } from "cookies-next";
 import { useMemo } from "react";
 
 export default function CartList() {
   const { setTotalPrice, setProducts } = useCheckOutStore();
-  const { data, isFetching } = useQuery({
-    queryKey: ["cart"],
+  const { data, isLoading } = useQuery({
+    queryKey: ["cart", getCookie(COOKIE.TOKEN)],
     queryFn: () => getCartList(),
   });
 
@@ -56,12 +57,12 @@ export default function CartList() {
   return (
     <div className='grid grid-cols-3 gap-6 relative'>
       <section className='col-span-2 flex flex-col gap-2'>
-        {isFetching &&
+        {isLoading &&
           Array(3)
             .fill(null)
             .map((_, index) => <CartCardSkeleton key={index} />)}
 
-        {!isFetching &&
+        {!isLoading &&
           data?.data?.map((item) => (
             <CartCard key={item.cartProductId} product={item} />
           ))}

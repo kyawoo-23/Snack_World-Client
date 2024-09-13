@@ -5,7 +5,7 @@ import { getProfile } from "@/actions/customer.action";
 import TextAreaInput from "@/components/Input/TextAreaInput";
 import TextInput from "@/components/Input/TextInput";
 import { useCheckOutStore } from "@/store/checkout-store";
-import { DIALOG_TYPES } from "@/utils/constants";
+import { COOKIE, DIALOG_TYPES } from "@/utils/constants";
 import { generateOrderCode } from "@/utils/shared";
 import {
   TCheckOutRequest,
@@ -13,13 +13,16 @@ import {
 } from "@/utils/shema/checkOutSchema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Phone } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
 
 export default function CheckOutDialog() {
+  const dialogRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { totalPrice, products } = useCheckOutStore();
 
   const { data: profile, isSuccess } = useQuery({
@@ -68,6 +71,13 @@ export default function CheckOutDialog() {
     onSuccess: (res) => {
       if (res.isSuccess) {
         toast.success("Order placed successfully");
+        queryClient.invalidateQueries({
+          queryKey: ["card", getCookie(COOKIE.TOKEN)],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["orders"],
+        });
+        dialogRef.current?.submit();
         router.push("/orders");
       } else {
         toast.error(res.message);
@@ -78,7 +88,7 @@ export default function CheckOutDialog() {
   return (
     <dialog id={DIALOG_TYPES.CHECKOUT} className='modal'>
       <div className='modal-box !border-accent border-2'>
-        <form method='dialog'>
+        <form method='dialog' ref={dialogRef}>
           <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>
             ✕
           </button>

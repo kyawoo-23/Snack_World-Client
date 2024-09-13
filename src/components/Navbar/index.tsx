@@ -1,7 +1,6 @@
 "use client";
 
 import { getCartList } from "@/actions/cart.action";
-import { getProfile } from "@/actions/customer.action";
 import { useAuthStore } from "@/store/auth-store";
 import { APP_THEMES } from "@/utils/constants";
 import { COOKIE } from "@/utils/constants";
@@ -12,9 +11,8 @@ import {
   removeLocalStorage,
   setLocalStorage,
 } from "@/utils/shared/local-storage";
-import { TUser } from "@/utils/shema/authSchema";
 import { useQuery } from "@tanstack/react-query";
-import { deleteCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import { Theme } from "daisyui";
 import { Heart, Moon, ShoppingCart, Sun } from "lucide-react";
 import Image from "next/image";
@@ -29,9 +27,9 @@ export default function Navbar() {
   const router = useRouter();
 
   const { data: cart, isFetching } = useQuery({
-    queryKey: ["cart"],
+    queryKey: ["cart", getCookie(COOKIE.TOKEN)],
     queryFn: () => getCartList(),
-    enabled: !!user,
+    enabled: !!user?.id,
   });
 
   const [theme, setTheme] = useState<Theme>(

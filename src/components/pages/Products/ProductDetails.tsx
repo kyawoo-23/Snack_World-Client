@@ -15,6 +15,8 @@ import toast from "react-hot-toast";
 import { TCartProductRequest } from "@/models/cart.model";
 import { addProductToCart } from "@/actions/cart.action";
 import { getProductPrice } from "@/utils/shared";
+import { COOKIE } from "@/utils/constants";
+import { getCookie } from "cookies-next";
 
 export default function ProductDetails({ id }: { id: string }) {
   const queryClient = useQueryClient();
@@ -77,7 +79,7 @@ export default function ProductDetails({ id }: { id: string }) {
       if (res.isSuccess) {
         toast.success("Added to cart");
         queryClient.invalidateQueries({
-          queryKey: ["cart"],
+          queryKey: ["cart", getCookie(COOKIE.TOKEN)],
         });
       } else {
         toast.error(res.message);
