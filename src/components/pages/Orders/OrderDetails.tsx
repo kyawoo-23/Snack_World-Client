@@ -1,4 +1,5 @@
 import { CustomerOrder, CustomerOrderVendor } from "@/prisma-types";
+import { CUSTOMER_ORDER_VENDOR_PRODUCT_STATUS } from "@/utils/constants";
 import { getLocalizedTime } from "@/utils/shared";
 import Image from "next/image";
 import Link from "next/link";
@@ -102,7 +103,26 @@ export default function OrderDetails({ order }: Props) {
             <p className='text-sm text-balance'>
               Address: {order.deliveryAddress}, Phone: {order.deliveryContact}
             </p>
-            <div className='text-xl'>Total: ${order.totalPrice}</div>
+            <div className='flex items-center gap-4'>
+              <div className='text-lg'>Total: ${order.totalPrice}</div>
+              <div className='text-xl'>
+                Final Amount: $
+                {order.totalPrice -
+                  order.customerOrderVendor
+                    .map((vendor) => {
+                      return vendor.customerOrderVendorProduct.reduce(
+                        (acc, prod) => {
+                          return prod.orderVendorProductStatus ===
+                            CUSTOMER_ORDER_VENDOR_PRODUCT_STATUS.CANCELLED
+                            ? acc + prod.price * prod.quantity
+                            : acc;
+                        },
+                        0
+                      );
+                    })
+                    .reduce((acc, price) => acc + price, 0)}
+              </div>
+            </div>
           </div>
         </div>
       </div>
