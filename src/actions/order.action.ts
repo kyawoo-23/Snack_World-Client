@@ -16,3 +16,11 @@ export async function getCustomerOrders() {
   const res = await get<CustomerOrder[]>("customer-order/user");
   return res;
 }
+
+export async function updateOrderStatus(orderId: string) {
+  const res = await patch<CustomerOrder, { status: string }>(
+    `customer-order/${orderId}/update-status`,
+    { status: "COMPLETED" }
+  );
+  return res;
+}

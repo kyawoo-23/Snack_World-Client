@@ -133,7 +133,7 @@ export default function Navbar() {
                       {
                         // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
                         <img
-                          src={`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.name}`}
+                          src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.name}`}
                           className='object-cover'
                         />
                       }

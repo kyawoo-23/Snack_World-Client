@@ -8,7 +8,7 @@ import { EMAIL_REGEX, LOCAL_STORAGE } from "@/utils/constants";
 import { getLocalStorage, setLocalStorage } from "@/utils/shared/local-storage";
 import { TProfileSchema } from "@/utils/shema/profileSchema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {  Lock, Mail, Phone, User } from "lucide-react";
+import { Lock, Mail, Phone, User } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -90,7 +90,7 @@ export default function Profile() {
                   <img
                     src={
                       data.data.image ||
-                      `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${data.data.name}`
+                      `https://api.dicebear.com/9.x/initials/svg?seed=${data.data.name}`
                     }
                     className='object-cover'
                     alt={data.data.name}

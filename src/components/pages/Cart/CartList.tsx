@@ -7,7 +7,10 @@ import { useCheckOutStore } from "@/store/checkout-store";
 import { COOKIE, DIALOG_TYPES } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
+import Link from "next/link";
 import { useMemo } from "react";
+
+const deliveryFees = 10;
 
 export default function CartList() {
   const { setTotalPrice, setProducts } = useCheckOutStore();
@@ -17,8 +20,6 @@ export default function CartList() {
   });
 
   console.log(data);
-
-  const deliveryFees = 10;
 
   const subTotal = useMemo(() => {
     return data?.data?.reduce(
@@ -55,44 +56,64 @@ export default function CartList() {
   };
 
   return (
-    <div className='grid grid-cols-3 gap-6 relative'>
-      <section className='col-span-2 flex flex-col gap-2'>
-        {isLoading &&
-          Array(3)
-            .fill(null)
-            .map((_, index) => <CartCardSkeleton key={index} />)}
+    <>
+      <div className='flex justify-between items-center mb-5'>
+        <h1 className='font-semibold text-xl'>Cart</h1>
+        {data?.data && (
+          <span className='font-bold'>{data?.data.length} items</span>
+        )}
+      </div>
+      <div className='grid grid-cols-3 gap-6 relative'>
+        <section className='col-span-3 flex flex-col gap-2'>
+          {isLoading &&
+            Array(3)
+              .fill(null)
+              .map((_, index) => <CartCardSkeleton key={index} />)}
 
-        {!isLoading &&
-          data?.data?.map((item) => (
-            <CartCard key={item.cartProductId} product={item} />
-          ))}
-      </section>
-      <section className='bg-accent text-accent-content card p-4 h-fit flex flex-col gap-2 sticky top-24'>
-        <h3 className='text-xl font-semibold'>Order Summary</h3>
-        <hr />
-        <div className='flex justify-between text-sm'>
-          <span>
-            Item<small>(s)</small> subtotal
-          </span>
-          <span>${subTotal}</span>
-        </div>
-        <div className='flex justify-between text-sm'>
-          <span>Delivery fees</span>
-          <span>${deliveryFees}</span>
-        </div>
-        <div className='flex justify-between text-sm'>
-          <span>Estimated tax</span>
-          <span>${estimatedTax}</span>
-        </div>
-        <hr />
-        <div className='flex justify-between font-semibold'>
-          <span>Total</span>
-          <span>${total}</span>
-        </div>
-        <button className='btn mt-2' onClick={handleCheckOut}>
-          Check Out
-        </button>
-      </section>
-    </div>
+          {!isLoading && data?.data.length === 0 ? (
+            <div className='flex flex-col items-center justify-center gap-4 h-full mt-56 col-span-3'>
+              <h3 className='text-lg'>No items in cart</h3>
+              <Link href='/' className='btn btn-wide btn-primary'>
+                Browse Products
+              </Link>
+            </div>
+          ) : (
+            <>
+              {data?.data?.map((item) => (
+                <CartCard key={item.cartProductId} product={item} />
+              ))}
+            </>
+          )}
+        </section>
+        {!isLoading && data && data?.data.length > 0 && (
+          <section className='bg-accent text-accent-content card p-4 h-fit flex flex-col gap-2 sticky top-24'>
+            <h3 className='text-xl font-semibold'>Order Summary</h3>
+            <hr />
+            <div className='flex justify-between text-sm'>
+              <span>
+                Item<small>(s)</small> subtotal
+              </span>
+              <span>${subTotal}</span>
+            </div>
+            <div className='flex justify-between text-sm'>
+              <span>Delivery fees</span>
+              <span>${deliveryFees}</span>
+            </div>
+            <div className='flex justify-between text-sm'>
+              <span>Estimated tax</span>
+              <span>${estimatedTax}</span>
+            </div>
+            <hr />
+            <div className='flex justify-between font-semibold'>
+              <span>Total</span>
+              <span>${total}</span>
+            </div>
+            <button className='btn mt-2' onClick={handleCheckOut}>
+              Check Out
+            </button>
+          </section>
+        )}
+      </div>
+    </>
   );
 }
