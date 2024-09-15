@@ -5,7 +5,7 @@ import { getProductDetails } from "@/actions/product.action";
 import Carousel from "@/components/Carousel";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { DollarSign, Heart, ShoppingCart, Weight } from "lucide-react";
+import { DollarSign, ShoppingCart, Weight } from "lucide-react";
 import ProductVariantPill from "@/components/Pill/ProductVariantPill";
 import QuantityInput from "@/components/Input/QuantityInput";
 import WishlistButton from "@/components/Button/WishlistButton";
@@ -15,8 +15,6 @@ import toast from "react-hot-toast";
 import { TCartProductRequest } from "@/models/cart.model";
 import { addProductToCart } from "@/actions/cart.action";
 import { getProductPrice } from "@/utils/shared";
-import { COOKIE } from "@/utils/constants";
-import { getCookie } from "cookies-next";
 
 export default function ProductDetails({ id }: { id: string }) {
   const queryClient = useQueryClient();
@@ -79,7 +77,7 @@ export default function ProductDetails({ id }: { id: string }) {
       if (res.isSuccess) {
         toast.success("Added to cart");
         queryClient.invalidateQueries({
-          queryKey: ["cart", getCookie(COOKIE.TOKEN)],
+          queryKey: ["cart"],
         });
       } else {
         toast.error(res.message);

@@ -8,9 +8,12 @@ import {
 
 export default async function page() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ["products"],
     queryFn: () => getProducts(),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: { nextCursor: number | undefined }) =>
+      lastPage.nextCursor,
   });
 
   return (

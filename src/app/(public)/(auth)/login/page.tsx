@@ -1,6 +1,6 @@
 "use client";
 
-import { getProfile, loginCustomer } from "@/actions/customer.action";
+import { loginCustomer } from "@/actions/customer.action";
 import TextInput from "@/components/Input/TextInput";
 import { useAuthStore } from "@/store/auth-store";
 import { EMAIL_REGEX } from "@/utils/constants";
@@ -9,7 +9,7 @@ import { LOCAL_STORAGE } from "@/utils/constants";
 import { setLocalStorage } from "@/utils/shared/local-storage";
 import { TLoginCustomerSchema } from "@/utils/shema/authSchema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCookie, setCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 import { Mail, Lock } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -58,7 +58,7 @@ export default function Login() {
           queryKey: ["products"],
         });
         queryClient.invalidateQueries({
-          queryKey: ["cart", getCookie(COOKIE.TOKEN)],
+          queryKey: ["cart"],
         });
         router.push("/");
       } else {

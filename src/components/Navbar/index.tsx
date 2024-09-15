@@ -12,7 +12,7 @@ import {
   setLocalStorage,
 } from "@/utils/shared/local-storage";
 import { useQuery } from "@tanstack/react-query";
-import { deleteCookie, getCookie } from "cookies-next";
+import { deleteCookie } from "cookies-next";
 import { Theme } from "daisyui";
 import { Heart, Moon, ShoppingCart, Sun } from "lucide-react";
 import Image from "next/image";
@@ -27,7 +27,7 @@ export default function Navbar() {
   const router = useRouter();
 
   const { data: cart, isFetching } = useQuery({
-    queryKey: ["cart", getCookie(COOKIE.TOKEN)],
+    queryKey: ["cart"],
     queryFn: () => getCartList(),
     enabled: !!user?.id,
   });

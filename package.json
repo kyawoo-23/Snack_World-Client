@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
+    "react-intersection-observer": "^9.13.1",
     "swiper": "^11.1.11",
     "tailwind-merge": "^2.5.2",
     "uploadthing": "^6.13.2",

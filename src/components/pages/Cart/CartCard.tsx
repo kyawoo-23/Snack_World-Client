@@ -13,8 +13,6 @@ import { getProductPrice } from "@/utils/shared";
 import Link from "next/link";
 import { MouseEvent } from "react";
 import ProductVariantPillView from "@/components/Pill/ProductVariantPillView";
-import { getCookie } from "cookies-next";
-import { COOKIE } from "@/utils/constants";
 
 type Props = {
   product: CartProduct;
@@ -49,7 +47,7 @@ export default function CartCard({ product }: Props) {
       if (res.isSuccess) {
         toast.success("Quantity updated");
         queryClient.invalidateQueries({
-          queryKey: ["cart", getCookie(COOKIE.TOKEN)],
+          queryKey: ["cart"],
         });
       } else {
         toast.error(res.message);
@@ -65,7 +63,7 @@ export default function CartCard({ product }: Props) {
       if (res.isSuccess) {
         toast.success("Product removed from cart");
         queryClient.invalidateQueries({
-          queryKey: ["cart", getCookie(COOKIE.TOKEN)],
+          queryKey: ["cart"],
         });
       } else {
         toast.error(res.message);

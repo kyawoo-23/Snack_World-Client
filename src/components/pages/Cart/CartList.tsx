@@ -4,9 +4,8 @@ import { getCartList } from "@/actions/cart.action";
 import CartCard from "@/components/pages/Cart/CartCard";
 import CartCardSkeleton from "@/components/pages/Cart/CartCardSkeleton";
 import { useCheckOutStore } from "@/store/checkout-store";
-import { COOKIE, DIALOG_TYPES } from "@/utils/constants";
+import { DIALOG_TYPES } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
-import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -15,7 +14,7 @@ const deliveryFees = 10;
 export default function CartList() {
   const { setTotalPrice, setProducts } = useCheckOutStore();
   const { data, isLoading } = useQuery({
-    queryKey: ["cart", getCookie(COOKIE.TOKEN)],
+    queryKey: ["cart"],
     queryFn: () => getCartList(),
   });
 
