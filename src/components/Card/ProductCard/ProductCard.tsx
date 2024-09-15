@@ -76,7 +76,11 @@ export default function ProductCard({ product }: { product: Product }) {
       </figure>
 
       <div className='flex justify-between items-center'>
-        <div className='text-lg font-semibold'>
+        <div
+          className={`text-lg font-semibold ${
+            product.promotion && "bg-success px-2"
+          }`}
+        >
           $
           {product.promotion
             ? product.promotionPrice || product.price

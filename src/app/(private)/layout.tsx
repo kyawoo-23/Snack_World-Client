@@ -1,6 +1,5 @@
 "use client";
 
-import CheckOutDialog from "@/components/Dialog/CheckOutDialog";
 import { useAuthStore } from "@/store/auth-store";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -26,10 +25,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return (
-    <>
-      {children}
-      <CheckOutDialog />
-    </>
-  );
+  return <>{children}</>;
 }

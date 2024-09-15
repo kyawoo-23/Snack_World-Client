@@ -63,14 +63,18 @@ export default function CartList() {
         )}
       </div>
       <div className='grid grid-cols-3 gap-6 relative'>
-        <section className='col-span-3 flex flex-col gap-2'>
+        <section
+          className={`${
+            data?.data.length === 0 ? "col-span-3" : "col-span-2"
+          } flex flex-col gap-2`}
+        >
           {isLoading &&
             Array(3)
               .fill(null)
               .map((_, index) => <CartCardSkeleton key={index} />)}
 
           {!isLoading && data?.data.length === 0 ? (
-            <div className='flex flex-col items-center justify-center gap-4 h-full mt-56 col-span-3'>
+            <div className='flex flex-col items-center justify-center gap-4 h-full mt-56'>
               <h3 className='text-lg'>No items in cart</h3>
               <Link href='/' className='btn btn-wide btn-primary'>
                 Browse Products

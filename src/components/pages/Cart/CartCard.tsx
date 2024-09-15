@@ -93,10 +93,12 @@ export default function CartCard({ product }: Props) {
           <div className='badge badge-accent badge-sm'>
             {product.product.vendor.name}
           </div>
-          <ProductVariantPillView
-            color={product.productVariant.variant.color}
-            name={product.productVariant.variant.name}
-          />
+          <div className='w-fit'>
+            <ProductVariantPillView
+              color={product.productVariant.variant.color}
+              name={product.productVariant.variant.name}
+            />
+          </div>
         </div>
       </div>
 

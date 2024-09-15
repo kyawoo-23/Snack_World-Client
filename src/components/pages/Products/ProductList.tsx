@@ -18,15 +18,12 @@ export default function ProductList() {
       },
     });
 
-  console.log(data);
-
   const { ref, inView } = useInView({
     threshold: 1.0,
   });
 
   useEffect(() => {
     if (inView) {
-      console.log("fetching next page");
       fetchNextPage();
     }
   }, [fetchNextPage, inView]);
