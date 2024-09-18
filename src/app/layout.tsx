@@ -5,7 +5,6 @@ import Providers from "@/app/providers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
-import CheckOutDialog from "@/components/Dialog/CheckOutDialog";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -31,7 +30,6 @@ export default function RootLayout({
           <main className='max-w-5xl mx-auto px-4 min-h-screen'>
             {children}
           </main>
-          <CheckOutDialog />
           <Footer />
         </Providers>
       </body>

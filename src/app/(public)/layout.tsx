@@ -1,5 +1,6 @@
 import { getCartList } from "@/actions/cart.action";
 import BuyNowDialog from "@/components/Dialog/BuyNowDialog";
+import CheckOutDialog from "@/components/Dialog/CheckOutDialog";
 import { QueryClient } from "@tanstack/react-query";
 
 export default async function layout({
@@ -17,6 +18,7 @@ export default async function layout({
     <>
       {children}
       <BuyNowDialog />
+      <CheckOutDialog />
     </>
   );
 }
