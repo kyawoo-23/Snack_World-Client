@@ -3,8 +3,8 @@
 import { Product } from "@/prisma-types";
 import { get } from "@/utils/api";
 
-export async function getProducts(index: number = 0) {
-  const res = await get<Product[]>(`product/public/${index}`);
+export async function getProducts(index: number = 0, search?: string) {
+  const res = await get<Product[]>(`product/public/${index}?search=${search}`);
 
   return {
     data: res,

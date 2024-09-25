@@ -18,8 +18,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
+import { useAuthStore } from "@/store/auth-store";
 
 export default function CheckOutDialog() {
+  const { user, removeUser } = useAuthStore();
   const dialogRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -28,6 +30,7 @@ export default function CheckOutDialog() {
   const { data: profile, isSuccess } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(),
+    enabled: !!user?.id,
   });
 
   const methods = useForm<TCheckOutSchema>({
