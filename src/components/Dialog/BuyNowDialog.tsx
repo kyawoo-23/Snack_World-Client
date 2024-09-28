@@ -18,7 +18,7 @@ export default function BuyNowDialog() {
   const router = useRouter();
   const { product } = useBuyNowStore();
   const { user } = useAuthStore();
-  const { setTotalPrice, setProducts, products } = useCheckOutStore();
+  const { setTotalPrice, setProducts } = useCheckOutStore();
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
@@ -68,9 +68,24 @@ export default function BuyNowDialog() {
     modal?.showModal();
   };
 
+  const handleClose = () => {
+    setSelectedVariant(null);
+    setQuantity(1);
+    setError(null);
+  };
+
   return (
     <dialog id={DIALOG_TYPES.BUY_NOW} className='modal'>
       <div className='modal-box !border-accent border-2'>
+        <form method='dialog' ref={dialogRef}>
+          <button
+            className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
+            onClick={handleClose}
+          >
+            ✕
+          </button>
+        </form>
+
         <h3 className='font-bold text-lg flex gap-2 items-center'>Buy now</h3>
 
         <p className='py-4 text-lg'>
@@ -88,7 +103,10 @@ export default function BuyNowDialog() {
                 productId={product.id}
                 variant={variant}
                 selectedVariant={selectedVariant}
-                setSelectedVariant={setSelectedVariant}
+                setSelectedVariant={() => {
+                  setSelectedVariant(variant.productVariantId);
+                  setError(null);
+                }}
               />
             ))}
           </div>
@@ -107,7 +125,7 @@ export default function BuyNowDialog() {
         </div>
       </div>
       <form method='dialog' className='modal-backdrop' ref={dialogRef}>
-        <button>close</button>
+        <button onClick={handleClose}>close</button>
       </form>
     </dialog>
   );

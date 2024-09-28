@@ -1,7 +1,6 @@
 "use client";
 
 import { ProductVariant } from "@/prisma-types";
-import { useRef } from "react";
 
 type Props = {
   productId: string;
@@ -16,8 +15,6 @@ export default function ProductVariantPill({
   selectedVariant,
   setSelectedVariant,
 }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
-
   return (
     <div
       className={`form-control border-2 border-accent px-3 rounded ${
@@ -35,10 +32,10 @@ export default function ProductVariantPill({
         ></div>
         <span className='label-text'>{variant.variant.name}</span>
         <input
-          ref={inputRef}
           type='radio'
           name='flavors'
           className={`radio border-2`}
+          checked={selectedVariant === variant.productVariantId}
           onClick={() => setSelectedVariant(variant.productVariantId)}
         />
       </label>
