@@ -5,6 +5,7 @@ import ProductCard from "@/components/Card/ProductCard/ProductCard";
 import ProductCardSkeleton from "@/components/Card/ProductCard/ProductCardSkeleton";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -63,12 +64,12 @@ export default function ProductList() {
 
         {!isPending && (
           <>
-            {data?.pages.map((page) => (
-              <>
+            {data?.pages.map((page, index) => (
+              <React.Fragment key={index}>
                 {page.data.data.map((product) => (
                   <ProductCard key={product.productId} product={product} />
                 ))}
-              </>
+              </React.Fragment>
             ))}
 
             {!hasNextPage && (
