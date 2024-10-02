@@ -28,7 +28,7 @@ export default function CartList() {
   }, [data]);
 
   const estimatedTax = useMemo(() => {
-    return subTotal ? subTotal * 0.2 : 0;
+    return subTotal ? parseFloat((subTotal * 0.2).toFixed(2)) : 0;
   }, [subTotal]);
 
   const total = useMemo(() => {
