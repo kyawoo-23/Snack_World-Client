@@ -60,7 +60,9 @@ export default function Login() {
         queryClient.invalidateQueries({
           queryKey: ["cart"],
         });
-        router.push("/");
+
+        window.location.href = "/";
+        // router.push("/");
       } else {
         toast.error(res.message);
       }
