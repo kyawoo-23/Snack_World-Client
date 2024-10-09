@@ -30,8 +30,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [user, router, removeUser]);
 
   return (
-    <BackgroundBeamsWithCollision className='h-[80vh] rounded-3xl w-full bg-accent p-4 grid place-items-center'>
+    <div className='h-[80vh] rounded-3xl w-full bg-accent p-4 grid place-items-center'>
       {children}
-    </BackgroundBeamsWithCollision>
+    </div>
   );
 }
