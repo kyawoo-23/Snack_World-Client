@@ -81,6 +81,12 @@ export default function CheckOutDialog() {
           queryKey: ["orders"],
         });
         dialogRef.current?.submit();
+
+        const modal = document.getElementById(
+          DIALOG_TYPES.BUY_NOW
+        ) as HTMLDialogElement;
+        modal?.close();
+
         router.push("/orders");
       } else {
         toast.error(res.message);
