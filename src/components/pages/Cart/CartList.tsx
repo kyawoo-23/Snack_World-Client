@@ -62,11 +62,11 @@ export default function CartList() {
           <span className='font-bold'>{data?.data.length} items</span>
         )}
       </div>
-      <div className='grid grid-cols-3 gap-6 relative'>
+      <div className='grid grid-cols-1 lg:grid-cols-3 md:gap-6 relative'>
         <section
           className={`${
             data?.data.length === 0 ? "col-span-3" : "col-span-2"
-          } flex flex-col gap-2`}
+          } flex flex-col gap-2 order-2 md:order-1`}
         >
           {isLoading &&
             Array(3)
@@ -89,7 +89,7 @@ export default function CartList() {
           )}
         </section>
         {!isLoading && data && data?.data.length > 0 && (
-          <section className='bg-accent text-accent-content card p-4 h-fit flex flex-col gap-2 sticky top-24'>
+          <section className='bg-accent text-accent-content card p-4 h-fit flex flex-col gap-2 sticky top-24 mb-6 order-1 md:order-2'>
             <h3 className='text-xl font-semibold'>Order Summary</h3>
             <hr />
             <div className='flex justify-between text-sm'>

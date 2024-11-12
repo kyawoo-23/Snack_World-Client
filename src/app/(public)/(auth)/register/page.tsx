@@ -65,7 +65,7 @@ export default function Register() {
   return (
     <FormProvider {...methods}>
       <form
-        className='p-4 rounded-xl w-[420px] flex flex-col gap-2'
+        className='p-4 rounded-xl lg:w-[420px] flex flex-col gap-2'
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className='text-center font-semibold text-2xl'>Create account</h1>

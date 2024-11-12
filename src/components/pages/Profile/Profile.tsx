@@ -80,10 +80,10 @@ export default function Profile() {
   return (
     <>
       <h2 className='text-xl font-semibold mb-6'>My Profile</h2>
-      <div className='grid grid-cols-3 gap-4'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
         {data && (
           <>
-            <div className='avatar'>
+            <div className='avatar flex justify-center'>
               <div className='mask mask-squircle size-3/4'>
                 {
                   // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
@@ -98,7 +98,7 @@ export default function Profile() {
                 }
               </div>
             </div>
-            <div className='col-span-2'>
+            <div className='col-span-2 mb-6'>
               <FormProvider {...methods}>
                 <form
                   className='grid grid-cols-2 gap-x-4'
@@ -110,6 +110,7 @@ export default function Profile() {
                     validation={{
                       required: "User name  is required",
                     }}
+                    className='col-span-2 md:col-span-1'
                   >
                     <User />
                   </TextInput>
@@ -125,6 +126,7 @@ export default function Profile() {
                         message: "Invalid email address",
                       },
                     }}
+                    className='col-span-2 md:col-span-1'
                   >
                     <Mail />
                   </TextInput>
@@ -133,11 +135,17 @@ export default function Profile() {
                     name='password'
                     type='password'
                     placeholder='*********'
+                    className='col-span-2 md:col-span-1'
                   >
                     <Lock />
                   </TextInput>
 
-                  <TextInput name='phone' type='tel' placeholder='Phone number'>
+                  <TextInput
+                    name='phone'
+                    type='tel'
+                    placeholder='Phone number'
+                    className='col-span-2 md:col-span-1'
+                  >
                     <Phone />
                   </TextInput>
 
@@ -148,7 +156,7 @@ export default function Profile() {
                   <div className='col-span-2 flex justify-end'>
                     <button
                       type='submit'
-                      className='btn btn-wide btn-accent'
+                      className='btn w-full md:btn-wide btn-accent'
                       disabled={mutation.isPending}
                     >
                       {mutation.isPending ? "Saving" : "Save"}

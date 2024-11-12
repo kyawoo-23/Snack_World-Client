@@ -10,6 +10,7 @@ type Props = {
   placeholder?: string;
   validation?: RegisterOptions;
   children?: React.ReactNode;
+  className?: string;
 };
 
 export default function TextInput({
@@ -18,6 +19,7 @@ export default function TextInput({
   placeholder = "",
   validation,
   children,
+  className,
 }: Props) {
   const [inputType, setInputType] = useState(type);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +31,7 @@ export default function TextInput({
   const errorMessage = errors[name]?.message as string | undefined;
 
   return (
-    <div className='mb-3'>
+    <div className={className + " mb-3"}>
       <label
         htmlFor={name}
         className={`text-sm font-medium mb-1 flex items-center gap-2 input input-bordered w-full ${

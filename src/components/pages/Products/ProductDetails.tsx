@@ -180,7 +180,7 @@ export default function ProductDetails({ id }: { id: string }) {
             </div>
 
             <button
-              className='btn btn-wide btn-accent mt-3'
+              className='btn btn-wide btn-accent mt-3 mb-6'
               onClick={handleAddToCart}
             >
               <ShoppingCart />

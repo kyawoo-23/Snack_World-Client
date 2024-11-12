@@ -66,7 +66,7 @@ export default function OrderDetails({ order }: Props) {
       <div className='collapse collapse-arrow bg-accent'>
         <input type='checkbox' />
         <div className='collapse-title font-medium'>
-          <div className='w-full flex justify-between items-center'>
+          <div className='w-full flex flex-wrap justify-between items-center'>
             <h3 className='text-lg'>{order.orderCode}</h3>
             <div className='flex items-center gap-2'>
               <span className='text-sm'>
@@ -113,7 +113,7 @@ export default function OrderDetails({ order }: Props) {
                         </span>
                       </div>
                     </div>
-                    <div className='flex gap-4 items-center'>
+                    <div className='flex flex-col sm:flex-row gap-4 items-end sm:items-center'>
                       <div className='flex gap-1 items-center badge badge-outline'>
                         <span>{product.quantity}</span>
                         <span>x</span>
@@ -129,7 +129,7 @@ export default function OrderDetails({ order }: Props) {
             </div>
           ))}
 
-          <div className='mt-2 flex justify-between font-semibold gap-4'>
+          <div className='mt-2 flex flex-col sm:flex-row justify-between font-semibold gap-4'>
             <p className='text-sm text-balance pt-1'>
               Address: {order.deliveryAddress}, Phone: {order.deliveryContact}
             </p>

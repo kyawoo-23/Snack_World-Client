@@ -75,7 +75,7 @@ export default function CartCard({ product }: Props) {
     <Link
       href={`/product/${product.product.productId}`}
       key={product.cartProductId}
-      className='flex products-start gap-4 py-4 border-b-2 border-accent justify-between group'
+      className='flex overflow-x-auto gap-4 py-4 border-b-2 border-accent justify-between group'
     >
       <div className='flex gap-4 h-28'>
         <figure className='size-28 relative shadow group-hover:scale-95 transition-all'>
